@@ -9,7 +9,7 @@ class Neuron:
         self.b = Value(random.uniform(-1, 1))
 
     def __call__(self, x):
-        # = tanh( sum( w * x) + b)
+        # = tanh (sum( w * x) + b)
         linear_result = sum((wt * x for wt, x in zip(self.w, x)), self.b)
         return linear_result.tanh()
 
@@ -36,7 +36,7 @@ class MLP:
 
     def __call__(self, x):
         for layer in self.layers:
-            x = layer(x)  # the input of the next layer is the ouput of the current layer
+            x = layer(x)  # the input of the next layer is the output of the current layer
         return x
 
     def parameters(self):

@@ -105,7 +105,7 @@ class Value:
 
         build(self)
         for v in nodes:
-            v._grad = 0.0
+            v.grad = 0.0
 
         for v in nodes:
             v._backward()
