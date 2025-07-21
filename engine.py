@@ -51,6 +51,7 @@ class Value:
     def __pow__(self, other):
         assert isinstance(other, (int, float))
         out = Value(self.data ** other, (self,))
+
         def _backward():
             self.grad += other * self.data ** (other - 1) * out.grad
 
@@ -98,14 +99,16 @@ class Value:
         visited = set()
 
         def build(v):
-            nodes.append(v)
             if v not in visited:
                 visited.add(v)
                 for u in v._prev: build(u)
+                nodes.append(v)
 
         build(self)
+
         for v in nodes:
             v.grad = 0.0
 
-        for v in nodes:
+        self.grad = 1.0
+        for v in reversed(nodes):
             v._backward()
