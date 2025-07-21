@@ -49,12 +49,10 @@ class Value:
         return out
 
     def __pow__(self, other):
-        other = other if isinstance(other, Value) else Value(other)
-        out = Value(self.data ** other.data, (self, other))
-
+        assert isinstance(other, (int, float))
+        out = Value(self.data ** other, (self,))
         def _backward():
-            self.grad += other.data * self.data ** (other.data - 1) * out.grad
-            other.grad += self.data ** other.data * log(other.data) * out.grad
+            self.grad += other * self.data ** (other - 1) * out.grad
 
         out._backward = _backward
         return out
@@ -66,7 +64,7 @@ class Value:
         out = Value(exp(self.data), (self,))
 
         def _backward():
-            self.grad += out * out.grad
+            self.grad += out.data * out.grad
 
         out._backward = _backward
         return out
@@ -90,6 +88,9 @@ class Value:
 
     def __radd__(self, other):
         return self + other
+
+    def __rsub__(self, other):
+        return self - other
 
     # backward method
     def backward(self):
