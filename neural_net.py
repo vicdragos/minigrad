@@ -41,3 +41,11 @@ class MLP:
 
     def parameters(self):
         return [p for layer in self.layers for p in layer.parameters()]
+
+def sse_loss(ys, ypred):
+    return sum((y1 - y2)**2 for y1, y2 in zip(ypred, ys))
+
+def mse_loss(ys, ypred):
+    return sum((y1 - y2)**2 for y1, y2 in zip(ypred, ys)) / len(ys)
+
+

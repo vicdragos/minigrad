@@ -7,10 +7,10 @@ ys = [0, 1, 1, 0] # expected values
 perceptron = MLP(2, [2, 1])
 h = 0.05
 
-for k in range(500):
+for k in range(300):
     # forward pass
     ypred = [perceptron(x) for x in xs] # predicted values
-    loss = sum((y1 - y2)**2 for y1, y2 in zip(ypred, ys))
+    loss = sse_loss(ys, ypred)
 
     # backward pass
     loss.backward()
