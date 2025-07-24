@@ -84,6 +84,13 @@ class Value:
         out = (x - 1) / (x + 1)
         return out
 
+    def relu(self):
+        out = Value(self.data if self.data > 0 else 0, (self,))
+        def _backward():
+            self.grad += (out.data > 0) * out.grad
+        out._backward = _backward
+        return out
+
     def __rmul__(self, other):
         return self * other
 
