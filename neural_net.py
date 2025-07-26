@@ -3,15 +3,15 @@ from engine import Value
 
 
 class Neuron:
-    def __init__(self, nin):
+    def __init__(self, nin, act = Value.tanh):
         # The bias and weights are randomly assigned a value between -1 and 1 when created
         self.w = [Value(random.uniform(-1, 1)) for _ in range(nin)]
         self.b = Value(random.uniform(-1, 1))
+        self.act = act
 
     def __call__(self, x):
-        # = tanh (sum( w * x) + b)
         linear_result = sum((wt * x for wt, x in zip(self.w, x)), self.b)
-        return linear_result.tanh()
+        return self.act(linear_result)
 
     def parameters(self):
         return self.w + [self.b]
