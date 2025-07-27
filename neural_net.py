@@ -10,8 +10,13 @@ class Neuron:
         self.act = act
 
     def __call__(self, x):
-        linear_result = sum((wt * x for wt, x in zip(self.w, x)), self.b)
-        return self.act(linear_result)
+        z = sum((wt * x for wt, x in zip(self.w, x)), self.b) # pre-activation
+        if self.act == 'tanh':
+            return z.tanh()
+        elif self.act == 'relu' :
+            return z.relu()
+        else:
+            return z
 
     def parameters(self):
         return self.w + [self.b]
@@ -30,9 +35,9 @@ class Layer:
 
 
 class MLP:
-    def __init__(self, nin, nouts, act = Value.tanh):  # nouts is a list containing the no. of outputs for each layer
+    def __init__(self, nin, nouts, act = 'tanh'):  # nouts is a list containing the no. of outputs for each layer
         sizes = [nin] + nouts
-        self.layers = [Layer(sizes[i], sizes[i + 1], act) for i in range(len(nouts))]
+        self.layers = [Layer(sizes[i], sizes[i + 1], act if i != len(nouts)-1 else 'linear') for i in range(len(nouts))]
 
     def __call__(self, x):
         for layer in self.layers:
