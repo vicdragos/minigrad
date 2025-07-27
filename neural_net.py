@@ -3,7 +3,7 @@ from engine import Value
 
 
 class Neuron:
-    def __init__(self, nin, act = Value.tanh):
+    def __init__(self, nin, act):
         # The bias and weights are randomly assigned a value between -1 and 1 when created
         self.w = [Value(random.uniform(-1, 1)) for _ in range(nin)]
         self.b = Value(random.uniform(-1, 1))
@@ -18,8 +18,8 @@ class Neuron:
 
 
 class Layer:
-    def __init__(self, nin, nout):
-        self.neurons = [Neuron(nin) for _ in range(nout)]
+    def __init__(self, nin, nout, act):
+        self.neurons = [Neuron(nin, act) for _ in range(nout)]
 
     def __call__(self, x):
         out = [n(x) for n in self.neurons]
@@ -30,9 +30,9 @@ class Layer:
 
 
 class MLP:
-    def __init__(self, nin, nouts):  # nouts is a list containing the no. of outputs for each layer
+    def __init__(self, nin, nouts, act = Value.tanh):  # nouts is a list containing the no. of outputs for each layer
         sizes = [nin] + nouts
-        self.layers = [Layer(sizes[i], sizes[i + 1]) for i in range(len(nouts))]
+        self.layers = [Layer(sizes[i], sizes[i + 1], act) for i in range(len(nouts))]
 
     def __call__(self, x):
         for layer in self.layers:
