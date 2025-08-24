@@ -47,10 +47,24 @@ class MLP:
     def parameters(self):
         return [p for layer in self.layers for p in layer.parameters()]
 
-def sse_loss(ys, ypred):
-    return sum((y1 - y2)**2 for y1, y2 in zip(ypred, ys))
 
-def mse_loss(ys, ypred):
-    return sum((y1 - y2)**2 for y1, y2 in zip(ypred, ys)) / len(ys)
+def sse_loss(ypred, ytrue):
+    return sum((y1 - y2)**2 for y1, y2 in zip(ypred, ytrue))
 
+def mse_loss(ypred, ytrue):
+    return sum((y1 - y2)**2 for y1, y2 in zip(ypred, ytrue)) / len(ytrue)
+
+def cross_entropy_loss(ypred, ytrue):
+    # The largest term from the predictions
+    maxi = max([y.data for y in ypred])
+
+    exps = [(y - maxi).exp() for y in ypred]
+    log_sum_exp = sum(exps).log()
+
+    # LogSoftmax
+    log_probs = [l - maxi - log_sum_exp for l in ypred]
+
+    loss = -log_probs[ytrue[0]]
+
+    return loss
 
