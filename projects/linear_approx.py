@@ -1,4 +1,5 @@
 from neural_net import *
+from optimizer import *
 import random
 
 m = 4
@@ -26,18 +27,19 @@ ys_norm = [(y - min_y) / (max_y - min_y) - 0.5 for y in ys]
 
 mlp = MLP(1, [1])
 
-h = 0.05
+optimizer = SGD(mlp.parameters(), lr=0.05)
 for k in range(1000 +1):
     # forward pass
     ypred_norm = [mlp(x) for x in xs]  # predicted values
     loss = mse_loss(ys_norm, ypred_norm)
 
+    optimizer.zero_grad()
+
     # backward pass
     loss.backward()
 
     # update
-    for p in mlp.parameters():
-        p.data += -h * p.grad
+    optimizer.step()
 
     ypred = [(y + 0.5) * (max_y - min_y) + min_y for y in ypred_norm]
 
