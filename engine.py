@@ -1,4 +1,4 @@
-from math import log, exp
+from math import log, exp, tanh
 
 
 class Value:
@@ -80,8 +80,13 @@ class Value:
         return out
 
     def tanh(self):
-        x = (self * 2).exp()
-        out = (x - 1) / (x + 1)
+        t = tanh(self.data)
+        out = Value(t, (self,))
+
+        def _backward():
+            self.grad += (1 - t ** 2) * out.grad
+
+        out._backward = _backward
         return out
 
     def relu(self):
