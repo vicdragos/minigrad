@@ -98,7 +98,7 @@ class Value:
         return self + other
 
     def __rsub__(self, other):
-        return self - other
+        return other - self
 
     # backward method
     def backward(self):
