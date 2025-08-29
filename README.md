@@ -2,8 +2,7 @@
 
 A simple, step-by-step implementation of a scalar-based autograd engine in Python, meant to solidify my understanding of the core concepts of deep learning. Built upon and heavily inspired by Andrej Karpathy's own autograd engine, `micrograd`.
 
-### Motivation & First-Principles Investigation
-
+### Motivation & Philosophy
 
 The philosophy behind this project was to treat every foundational concept as a hypothesis to be tested and validated through implementation. Nothing was copied or taken for granted; every component was built and experimented with to develop a deep intuition. In essence, `minigrad` is a rigorous investigation into every concept that was not completely obvious to me from the start.
 
