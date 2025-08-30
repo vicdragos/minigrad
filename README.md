@@ -31,7 +31,7 @@ The framework contains all the necessary components to train a simple neural net
 
 To provide a concrete example of the engine in action, a complete training and evaluation pipeline has been implemented using the small `scikit-learn` digits dataset (8x8 images). This allows for rapid testing and demonstrates the end-to-end functionality of the framework.
 
-The code for this demonstration can be found in the [**mini-MSINT.ipynb**](./mini-MSINT.ipynb) notebook.
+The code for this demonstration can be found in the [**mini-MNIST.ipynb**](./mini-MSINT.ipynb) notebook.
 
 Below is a snippet from the notebook, illustrating the core logic:
 
